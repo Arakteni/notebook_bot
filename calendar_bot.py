@@ -13,7 +13,6 @@ def Send_Reminder(chat_id, message):
 
 @bot.message_handler(commands=['start'])
 def Start(message):
-    print("Start command received")
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
     btn1 = types.KeyboardButton("🗓Поставить напоминание")
     markup.add(btn1)
@@ -21,7 +20,6 @@ def Start(message):
 
 @bot.message_handler(func=lambda message: message.text == '🗓Поставить напоминание')
 def Get_text_message(message):
-    print("Reminder button pressed")
     msg = bot.send_message(message.from_user.id, 'Введите напоминание')
     bot.register_next_step_handler(msg, Process_Reminder)
 
@@ -41,7 +39,7 @@ def Set_Reminder_Date(message, reminder_text):
 
     except ValueError:
         bot.send_message(chat_id, "Неверный формат даты. Используйте формат ДД.ММ.ГГГГ.")
-        return  # Завершаем функцию при ошибке
+        return
 
 def Set_Reminder_Time(message, reminder_text, reminder_date):
     time_str = message.text
@@ -54,8 +52,8 @@ def Set_Reminder_Time(message, reminder_text, reminder_date):
         bot.register_next_step_handler(msg, lambda msg: schedule_reminder(msg, chat_id, time_reminder, reminder_text))
 
     except ValueError:
-        bot.send_message(chat_id, "Неверный формат времени. Пожалуйста, используйте формат ЧЧ:ММ.")
-        return  # Завершаем функцию при ошибке
+        bot.send_message(chat_id, "Неверный формат времени. Используйте формат ЧЧ:ММ.")
+        return 
 
 def schedule_reminder(message, chat_id, reminder_datetime, reminder_text):
     timezone_str = message.text.strip()
