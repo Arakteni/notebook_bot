@@ -4,7 +4,7 @@ import threading
 from datetime import datetime
 import pytz
 
-bot = telebot.TeleBot('7942790279:AAGpVREfRxuLj_9X2ZU7EI0z6NJoAjc6bP4')
+bot = telebot.TeleBot('')
 
 reminder = {}
 
